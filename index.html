@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Portfolio - Khadeeja Sultan Arbi</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+  body{background:#f4f6fb;color:#222}
+  header{background:linear-gradient(90deg,#4a00e0,#8e2de2);color:white;padding:40px 20px;text-align:center}
+  header h1{font-size:36px;margin-bottom:10px}
+  nav{background:white;padding:15px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.1);position:sticky;top:0}
+  nav button{margin:0 8px;padding:10px 18px;border:none;border-radius:20px;background:#eee;cursor:pointer;font-weight:bold}
+  nav button.active{background:#4a00e0;color:white}
+  main{max-width:900px;margin:30px auto;padding:0 20px}
+  section{background:white;padding:25px;border-radius:12px;margin-bottom:20px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+  h2{margin-bottom:12px;color:#4a00e0}
+  .skills{display:flex;flex-wrap:wrap;gap:10px}
+  .skills span{background:#eee;padding:8px 14px;border-radius:20px}
+  .projects{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+  .card{border:1px solid #eee;padding:15px;border-radius:10px}
+  input{width:70%;padding:12px;border:1px solid #ddd;border-radius:8px}
+  #addBtn{padding:12px 18px;background:#4a00e0;color:white;border:none;border-radius:8px;cursor:pointer}
+  ul{list-style:none;margin-top:15px}
+  ul li{background:#f9f9f9;padding:12px;border-radius:8px;margin-bottom:8px;display:flex;justify-content:space-between}
+  ul li.done{text-decoration:line-through;opacity:.6}
+  footer{text-align:center;padding:20px;color:#777}
+  @media(max-width:600px){.projects{grid-template-columns:1fr} input{width:100%;margin-bottom:10px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Khadeeja Sultan Arbi</h1>
+  <p>Web Developer | HTML - CSS - JavaScript</p>
+  <p id="greeting">Welcome to my portfolio!</p>
+</header>
+<nav>
+  <button class="active" onclick="showSection('about',this)">About</button>
+  <button onclick="showSection('skills',this)">Skills</button>
+  <button onclick="showSection('projects',this)">Projects</button>
+  <button onclick="showSection('todo',this)">My Tasks</button>
+</nav>
+<main>
+  <section id="about">
+    <h2>About Me</h2>
+    <p>Hello! I am learning Web Development from Coursera - Introduction to Web Development by Microsoft. I built this project using Microsoft Copilot assistance for HTML, CSS and JavaScript.</p>
+    <br>
+    <button onclick="changeGreeting()">Click for Greeting</button>
+  </section>
+  <section id="skills" style="display:none">
+    <h2>My Skills</h2>
+    <div class="skills">
+      <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Flexbox</span><span>CSS Grid</span><span>Git & GitHub</span><span>Responsive Design</span>
+    </div>
+  </section>
+  <section id="projects" style="display:none">
+    <h2>My Projects</h2>
+    <div class="projects">
+      <article class="card"><h3>Portfolio Website</h3><p>Semantic HTML, Flexbox and Grid based responsive portfolio.</p></article>
+      <article class="card"><h3>Task Manager App</h3><p>JavaScript DOM, Event Handling and interactivity.</p></article>
+      <article class="card"><h3>Responsive Landing Page</h3><p>Media Queries and Mobile-first design.</p></article>
+      <article class="card"><h3>GitHub Pages Deployment</h3><p>Project deployed live using Git and GitHub Pages.</p></article>
+    </div>
+  </section>
+  <section id="todo" style="display:none">
+    <h2>My Task Manager - Try It!</h2>
+    <input type="text" id="taskInput" placeholder="Enter your task...">
+    <button id="addBtn" onclick="addTask()">Add Task</button>
+    <ul id="taskList"></ul>
+    <p id="taskCount">Total Tasks: 0</p>
+  </section>
+</main>
+<footer>
+  <p>© 2026 Khadeeja Sultan Arbi | Built with HTML, CSS, JavaScript & Copilot</p>
+</footer>
+<script>
+  function showSection(id, btn){
+    document.querySelectorAll('main section').forEach(s => s.style.display='none');
+    document.getElementById(id).style.display='block';
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  function changeGreeting(){
+    const hour = new Date().getHours();
+    let msg = hour < 12 ? "Good Morning! Thanks for visiting my portfolio." : hour < 18 ? "Good Afternoon! Thanks for visiting." : "Good Evening! Thanks for visiting.";
+    document.getElementById('greeting').textContent = msg;
+  }
+  function addTask(){
+    const input = document.getElementById('taskInput');
+    const text = input.value.trim();
+    if(!text) return alert("Please enter a task!");
+    const li = document.createElement('li');
+    li.innerHTML = `<span>${text}</span> <button onclick="this.parentElement.classList.toggle('done')">Done</button>`;
+    document.getElementById('taskList').appendChild(li);
+    input.value = "";
+    updateCount();
+  }
+  function updateCount(){
+    const count = document.querySelectorAll('#taskList li').length;
+    document.getElementById('taskCount').textContent = "Total Tasks: " + count;
+  }
+</script>
+</body>
+</html>
